@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/fcc8_basic_algo.iml" filepath="$PROJECT_DIR$/.idea/fcc8_basic_algo.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/FreeCodeCamp.iml" filepath="$PROJECT_DIR$/.idea/FreeCodeCamp.iml" />
+>>>>>>> 01dea87032966a392878ab1b85db7b6131f00784
     </modules>
   </component>
 </project>
