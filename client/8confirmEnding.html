@@ -1,6 +1,12 @@
 function end(str, target) {
+  var testLength = target.length;
+  var strLength = str.length;
+  if (str.substr(-testLength) === target){
+    return true;
+  } else {
+    return false;
+  }
 
-return str;
 }
 
 end("Bastian", "n");
