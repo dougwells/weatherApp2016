@@ -1,0 +1,604 @@
+@import "vendors/bootstrap/bootstrap.less";
+@import "vendors/font-awesome/font-awesome.less";
+
+//colors
+@primary: #26a5d3;
+@dark: #333333;
+@dark2: #373B44;
+@dark3: #2f3238;
+@dark4: #3085a3;
+@light: #f4f4f4;
+@special: rgba(255,255,255, 0.2);
+@navred: #ff0066;
+
+html{
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: @dark;
+  background-color: @light;
+}
+
+//typography
+h1,h2,h3,h4,h5,h6{
+  margin: 0 0 35px;
+  text-transform: uppercase;
+  font-family: " Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+p{
+  margin: 0 0 25px;
+  font-size: 18px;
+  line-height: 1.6em;
+}
+
+a{
+	color:@light;
+
+}
+
+a:hover,a:active, a:focus{
+	text-decoration:none;
+	color: darken(@primary, 20%);
+}
+
+p a, p a:focus {
+  color: @primary;
+}
+
+//Navigation
+.navbar{
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  font-family: " Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: @dark;
+}
+
+.navbar-brand{
+  font-weight: 700;
+}
+
+.navbar-brand:hover{
+  outline: none;
+  background-color: @special;
+}
+
+.navbar-brand:focus{
+  outline: none;
+}
+
+.navbar-custom a{
+  color: @light;
+}
+
+.navbar-custom li a {
+  -webkit-transition:background .3s ease-in-out;
+  -moz-transition:background .3s ease-in-out;
+  transition:background .3s ease-in-out;
+}
+
+#navbar li a:hover,
+#navbar li a:focus,
+#navbar li.active {
+    outline: none;
+    background-color: @special;
+    color: @navred;
+}
+
+.navbar-toggle {
+  padding: 4px 6px;
+  font-size: 16px;
+  color: @light;
+}
+
+.icon-bar {
+  background-color: #fff;
+}
+
+@media (min-width: 767px) {
+  .navbar{
+    padding: 20px 0;
+    border-bottom: none;
+    background: transparent;
+    -webkit-transition:background .5s ease-in-out, padding .5s ease-in-out;
+    -moz-transition:background .5s ease-in-out, padding .5s ease-in-out;
+    transition:background .5s ease-in-out, padding .5s ease-in-out;
+  }
+
+  .top-nav-collapse
+  {
+    padding: 0px 0;
+    background-color: @dark;
+    color: @light;
+    // border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .top-nav-collapse li a:focus,
+  .top-nav-collapse li.active
+   {
+    outline: none;
+    background-color: rgba(255,255,255,0.2);
+  }
+
+}
+//Section
+section {
+  width: 100%;
+  height: 100vh;
+  padding: 0 7%;
+  display: table;
+  margin: 0;
+  max-width: none;
+  background-color: @light;
+
+}
+
+//Landing Page
+.intro {
+  display: table;
+  // height: 100%;
+  height: 100vh;
+  width: 100%;
+  padding: 100px 0;
+  text-align: center;
+  color: @light;
+  background:url(https://dl.dropboxusercontent.com/s/gmmegbps5gmv73h/intro-bg.jpg) no-repeat bottom center scroll;
+  background-color: @dark4;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+.intro-body{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.brand-heading {
+  font-size: 40px;
+}
+
+.intro-text {
+  font-size: 18px;
+}
+
+@media (min-width: 767px) {
+  .intro{
+    height: 100%;
+    padding: 0;
+  }
+
+  .brand-heading{
+    font-size: 100px;
+  }
+
+  .intro-text {
+    font-size: 25px;
+  }
+}
+
+//What I Believe
+#what {
+  background:url(https://dl.dropboxusercontent.com/s/2ommvk9mcazqwee/believe-bg.jpg) no-repeat bottom center scroll;
+  max-width: 100%;
+  height: 100%;
+  padding:100px 0;
+  color: @light;
+  background-color: @dark;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  vertical-align: middle;
+}
+
+
+@media (min-width: 767px) {
+  #what{
+    // padding: 100px;
+
+  }
+}
+
+//Who I am
+#who {
+  background:url(https://dl.dropboxusercontent.com/s/mr3ceazz1mbk2aw/beach-bg.jpg) no-repeat bottom center scroll;
+  width: 100%;
+  height: 100%;  //set view height to 100% of view port
+  padding:50px 0;
+  color: @light;
+  background-color: @dark;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+}
+
+@media (min-width: 767px) {
+  #who{
+    // padding: 0px;
+
+  }
+}
+
+//Projects
+#projects {
+  padding: 100px 0;
+  max-width: 100%;
+  height: 100vh;  //set view height to 100% of view port
+  background: @dark;
+	color: #fff;
+	font-weight: 400;
+	font-size: 1em;
+	font-family: 'Raleway', Arial, sans-serif;
+  text-align: center;
+  img {
+    margin-right: 30px;
+  }
+}
+
+@media (min-width: 767px) {
+  #projects{
+
+  }
+}
+
+//Contact Section
+
+#contact {
+  padding: 125px 0;
+  max-width: 100%;
+  height: 100vh;  //set view height to 100% of view port
+  // background: @dark;
+  background-image: url(https://dl.dropboxusercontent.com/s/7z8xrary15fr7sb/la-jolla-bg.jpeg); //no-repeat bottom center scroll;
+  color: @light;
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+
+  /* Background image is fixed in viewport.  Content "moves" over image vs
+  content & image moving together.  Also, image does not move if content hieght
+  is greater than image height */
+  // background-attachment: fixed;
+
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+
+/* Set a background color that will be displayed
+   while the background image is loading */
+background-color: @dark4;
+}
+
+@media (min-width: 767px) {
+  #contact{
+  }
+}
+/* Put "contact me" buttons vertically instead of horizontally */
+@media (max-width: 460px){
+    #contact{
+      .btn-link-1 {margin: 10px 100px;}
+  }
+}
+
+//footer
+footer {
+  margin-top: 10px;
+  padding-top: 30px;
+  height: 80px;
+  text-align: center;
+}
+
+.page-scroll {
+  -webkit-transition-property: -webkit-transform;
+  -webkit-transition-duration: 1s;
+  -moz-transition-property: -webkit-transform;
+  -moz-transition-duration: 1s;
+}
+
+//Content
+.content-section{
+  padding: 70px 0 40px 0;
+}
+
+//Icon Blocks
+.block-icon-left{
+  overflow: auto;
+
+  h1,h2,h3,h4,h5,h6{
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 20px;
+  }
+
+  .icon{
+    float:left;
+    width: 30%;   //takes 30% of block-icon-left's column allocation
+    margin-top: 10px;
+  }
+
+  .icon-content{
+    float:left;
+    width: 70%;   //takes 70% of block-icon-left's column allocation
+  }
+}
+
+.block-icon-right{
+  float: right;
+  max-width: 400px;
+
+  h1,h2,h3,h4,h5,h6{
+    margin: 0 0 0px 0;
+    padding: 0;
+    font-size: 20px;
+  }
+
+  .icon{
+    float:left;
+    width: 30%;   //takes 30% of block-icon-right's column allocation
+    // margin-top: 10px;
+  }
+
+  .icon-content{
+    float:left;
+    text-align: left;
+    width: 70%;   //takes 70% of block-icon-right's column allocation
+  }
+}
+
+
+//Elements
+
+//Semi-Transparent Button
+.semi-transparent-button {
+  display: block;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 8px;
+  width: 80%;
+  max-width: 200px;
+  background: #fff; /* fallback color for old browsers */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+
+.semi-transparent-button:hover,
+.semi-transparent-button:focus,
+.semi-transparent-button:active {
+  background: @light;
+  color: @primary;
+  transition: all 0.5s ease-in;
+}
+
+//hackerschool.mx buttons semi-transparent buttons w/background color
+.btn-link-1 {
+	position: relative;
+	display: inline-block;
+	height: 50px;
+  width: 130px;
+	margin: 0 5px;
+	// padding: 16px 20px 0 20px;
+	background: #65BB45;
+	font-size: 16px;
+    font-weight: 300;
+    line-height: 16px;
+    color: #fff;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+.btn-link-1:hover, .btn-link-1:focus, .btn-link-1:active {
+  outline: 0;
+  opacity: 0.6;
+  color: #fff;
+}
+
+.btn-link-1:before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 50%;
+}
+
+.scroll-arrow {
+    position: absolute;
+    width: 74px;
+    height: 74px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    bottom: 10px;
+}
+
+// //My Portfolio Page Effects
+// .image-showcase {
+//   height: 300px;
+//   width: 300px;
+// }
+//
+// .image-showcase:hover {
+//   outline: 0;
+//   opacity: 0.6;
+// }
+
+//Projects Page:  My portfolio page effects:
+.grid {
+	position: relative;
+	margin: 0 auto;
+	padding: 1em 0 4em;
+	max-width: 1000px;
+	list-style: none;
+	text-align: center;
+}
+
+/* Common style */
+.grid figure {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin: 10px 1%;
+	min-width: 320px;
+	max-width: 480px;
+	max-height: 360px;
+	width: 48%;
+	background: @dark4;
+	text-align: center;
+	cursor: pointer;
+}
+
+.grid figure img {
+	position: relative;
+	display: block;
+	min-height: 100%;
+	max-width: 100%;
+	opacity: 0.8;
+}
+
+.grid figure figcaption {
+	padding: 2em;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1.25em;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.grid figure figcaption::before,
+.grid figure figcaption::after {
+	pointer-events: none;
+}
+
+.grid figure figcaption,
+.grid figure figcaption > a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Anchor will cover the whole item by default */
+/* For some effects it will show as a button */
+.grid figure figcaption > a {
+	z-index: 1000;
+	text-indent: 200%;
+	white-space: nowrap;
+	font-size: 0;
+	opacity: 0;
+}
+
+.grid figure h2,
+.grid figure h3 {
+	word-spacing: -0.15em;
+	font-weight: 300;
+}
+
+.grid figure h2 span,
+.grid figure h3 span {
+	font-weight: 800;
+}
+
+.grid figure h2,
+.grid figure h3,
+.grid figure p {
+	margin: 0;
+}
+
+//Font size for caption p element
+//Caution ... can cause overlay layout to mess up if go too big ...
+.grid figure p {
+	letter-spacing: 1px;
+	font-size: 68.5%;
+}
+
+/*---------------*/
+/***** Chico *****/
+/*---------------*/
+
+figure.effect-chico img {
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale(1.12);
+	transform: scale(1.12);
+}
+
+figure.effect-chico:hover img {
+	opacity: 0.5;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
+figure.effect-chico figcaption {
+	padding: 3em;
+}
+
+//puts frame around effect and scales photo
+figure.effect-chico figcaption::before {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	bottom: 30px;
+	left: 30px;
+  //this is the white border of the effect
+	border: 1px solid #fff;
+	content: '';
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+}
+
+figure.effect-chico figcaption::before,
+figure.effect-chico p {
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+}
+
+//Padding from "border" on effect
+figure.effect-chico h2,
+figure.effect-chico h3 {
+	padding: 20% 0 20px 0;
+}
+
+//Amount of p text in caption effect (max-width)
+figure.effect-chico p {
+	margin: 0 auto;
+  //max width of p element
+	max-width: 300px;
+	-webkit-transform: scale(1.5);
+	transform: scale(1.5);
+}
+
+figure.effect-chico:hover figcaption::before,
+figure.effect-chico:hover p {
+	opacity: 1;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
+@media screen and (max-width: 50em) {
+	.content {
+		padding: 0 10px;
+		text-align: center;
+	}
+	.grid figure {
+		display: inline-block;
+		float: none;
+		margin: 10px auto;
+		width: 100%;
+	}
+}
