@@ -1,0 +1,105 @@
+[
+    {
+      "id":1,
+      "quote": "Stay hungry.  Stay foolish.",
+      "imageUrl": "https://dl.dropboxusercontent.com/s/ux3k273k49ax1qa/earthrise.jpg",
+      "imageColor": "dark",
+      "author": "Editors of Whole Earth Catalog - final issue"
+    },
+
+    {
+      "id":2,
+      "quote": "Simple is harder than complex",
+      "imageUrl": "https://dl.dropboxusercontent.com/s/n7066mihk1pypy0/simple-harder-complex.png",
+      "imageColor": "dark",
+      "author": "Steve Jobs"
+    },
+
+    {
+      "id":3,
+      "quote": "Death is very likely the single best invention of Life. It is Life's change agent. It clears out the old to make way for the new.",
+      "imageUrl": "https://dl.dropboxusercontent.com/s/jkfbh02xbg448fy/death.jpg",
+      "imageColor": "dark",
+      "author": "Steve Jobs"
+    },
+
+    {
+      "id":4,
+      "quote": "The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle.",
+      "imageUrl": "https://dl.dropboxusercontent.com/s/tcsbus8jtfdoa37/lsdQuote.jpg",
+      "imageColor": "light",
+      "author": "Steve Jobs"
+    },
+
+  {
+    "id":"5",
+    "quote": "The greatest deception men suffer is from their own opinions.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/mxzusasd498ww2a/hang_on_building_top.jpg",
+    "imageColor": "light",
+    "author": "Leonardo da Vinci"
+  },
+
+  {
+    "id":"6",
+    "quote": "Who you have been ain't who you gotta be ...",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/j5999u9mmzn8vcu/mcgraw.jpg",
+    "imageColor": "light",
+    "author": "Tim McGraw, song: \"Emotional Traffic\""
+  },
+
+  {
+    "id":"7",
+    "quote": "You have to learn the rules of the game. And then you have to play better than anyone else.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/64os79nu7k8qcdw/track.jpg",
+    "imageColor": "dark",
+    "author": "Albert Einstein"
+  },
+
+  {
+    "id":"8",
+    "quote": "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/2c9cmd3zpf9ot7i/triathelete.jpg",
+    "imageColor": "light",
+    "author": "Thomas Edison"
+  },
+
+  {
+    "id":"9",
+    "quote": "I am bullish on the global development. I am bullish on billions of people getting out of poverty.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/xscd92q0ikip51j/galaxy.jpeg",
+    "imageColor": "light",
+    "author": "Marc Andreesen"
+  },
+
+  {
+    "id":"10",
+    "quote": "Only you can control your future.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/6tbiah6zwa55nt4/bridge-in-forest.jpeg",
+    "imageColor": "light",
+    "author": "Dr. Seuss"
+  },
+
+  {
+    "id":"11",
+    "quote": "I told Warren if he mentions Prop. 13 one more time, he has to do 500 push-ups.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/4pccyow004a4fz8/pushupGirlOneHand.jpg",
+    "imageColor": "light",
+    "author": "Arnold Schwarzenegger"
+  },
+
+  {
+    "id":"12",
+    "quote": "Predicting rain doesn't count. Building arks does.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/fzmqo87d9m9x4el/sfo.jpg",
+    "imageColor": "light",
+    "author": "Warren Buffett"
+  },
+
+  {
+    "id":"13",
+    "quote": "Choose based on what makes it easy to be the best version of yourself.",
+    "imageUrl": "https://dl.dropboxusercontent.com/s/lzipvmm8cqu6zut/swim.jpg",
+    "imageColor": "light",
+    "author": "Doug Wells"
+  }  
+  ]
