@@ -3,7 +3,6 @@ $(document).ready(function() {
   var wxAPI = "APPID=094c7cfda5c9b5993192ea76c73f8d41";
 
 //Get user's location
-
 $.ajax(
   {
   url: "http://ip-api.com/json",
@@ -18,8 +17,7 @@ $.ajax(
     var wxForecastCityUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+"&"+wxAPI;
 
 
-
-    // Todays Weather
+    // Get Todays Weather
       $.ajax(
         {
         url: wxTodayLatLonUrl,
@@ -29,11 +27,25 @@ $.ajax(
         success: function(today) {
             var tempC = Math.round(today.main.temp - 273.15);
             var tempF = Math.round(tempC*9/5 + 32);
-            var temp = tempF;
             var sky = today.weather[0].description.toUpperCase();
+            var temp = tempF;
+            var units = '°F';
             document.querySelector('#city').textContent = "Todays weather for "+location.city;
-            document.querySelector('#wx').textContent = sky + ". Temp = " + temp + " DEG F.";
+            document.querySelector('#wx').textContent = sky + ". Temp = " + temp + units;
             console.dir(today);
+
+            //Convert Deg C <-> Deg F
+            document.querySelector('#switchUnits').addEventListener('click',function(){
+              if(temp === tempC){
+                temp = tempF;
+                units = '°F'
+              }else{
+                temp = tempC;
+                units = '°C'
+              }
+              document.querySelector('#wx').textContent = sky + ". Temp = " + temp + units;
+            });
+
         },
         error: function(xhr, status, errorThrown) {
           console.log("There has been an error connecting to OpenWeather API");
