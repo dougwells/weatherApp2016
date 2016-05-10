@@ -14,6 +14,10 @@ $.ajax(
     var city = location.city.toLowerCase().replace(/\s+/g, '')+","+location.countryCode;
     var wxTodayLatLonUrl = "http://api.openweathermap.org/data/2.5/weather?lat="+location.lat+"&lon="+location.lon+"&"+wxAPI;
     var wxTodayCityUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&"+wxAPI;
+    var wxForecastLatLonUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+location.lat+"&lon="+location.lon+"&"+wxAPI;
+    var wxForecastCityUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+"&"+wxAPI;
+
+
 
     // Todays Weather
       $.ajax(
@@ -40,17 +44,15 @@ $.ajax(
 
       $.ajax(
         {
-        url: "http://api.openweathermap.org/data/2.5/forecast/daily?q=sandiego,usa&cnt=5&APPID=094c7cfda5c9b5993192ea76c73f8d41",
+        url: wxForecastLatLonUrl,
         dataType : "json",
         type: "GET",
 
         success: function(fc) {
           var forecast = {}
-          for(var i=0; i<fc.list.length; i++){
-              forecast[i] = {
-              description: fc.list[i].weather[0].description
-            };
-
+          for(var i=0; i<=4; i++){
+            var day = "#fc"+(i+1);
+            document.querySelector(day).textContent = fc.list[i].weather[0].description;
           };
           console.log(forecast);
           console.dir(fc);
