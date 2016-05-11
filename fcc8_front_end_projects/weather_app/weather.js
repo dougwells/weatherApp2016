@@ -31,7 +31,7 @@ $.ajax(
             var temp = tempF;
             var units = '°F';
             document.querySelector('#city').textContent = "Todays weather for "+location.city;
-            document.querySelector('#wx').textContent = sky + ". Temp = " + temp + units;
+            document.querySelector('#wx').textContent = sky + ".  Current Temperature is " + temp + units;
             console.dir(today);
 
             //Convert Deg C <-> Deg F
@@ -43,7 +43,28 @@ $.ajax(
                 temp = tempC;
                 units = '°C'
               }
-              document.querySelector('#wx').textContent = sky + ". Temp = " + temp + units;
+              document.querySelector('#wx').textContent = sky + ".  Current Temperature is " + temp + units;
+            });
+
+            //Forecast Weather
+
+            $.ajax(
+              {
+              url: wxForecastLatLonUrl,
+              dataType : "json",
+              type: "GET",
+
+              success: function(fc) {
+                 for(var i=0; i<=4; i++){
+                  var day = "#fc"+(i+1);
+                  document.querySelector(day).textContent = fc.list[i].weather[0].description;
+                };
+                console.dir(fc);
+
+              },
+              error: function(xhr, status, errorThrown) {
+                console.log("There has been an error connecting to OpenWeather API");
+              }
             });
 
         },
@@ -52,28 +73,7 @@ $.ajax(
         }
       });
 
-      //Forecast Weather
 
-      $.ajax(
-        {
-        url: wxForecastLatLonUrl,
-        dataType : "json",
-        type: "GET",
-
-        success: function(fc) {
-          var forecast = {}
-          for(var i=0; i<=4; i++){
-            var day = "#fc"+(i+1);
-            document.querySelector(day).textContent = fc.list[i].weather[0].description;
-          };
-          console.log(forecast);
-          console.dir(fc);
-
-        },
-        error: function(xhr, status, errorThrown) {
-          console.log("There has been an error connecting to OpenWeather API");
-        }
-      });
 
   },
   error: function(xhr, status, errorThrown) {
