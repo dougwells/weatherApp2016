@@ -41,17 +41,27 @@ $.ajax(
               type: "GET",
               success: function(forecast) {
 
-// All of above simply to get location, today's weather and forecast Weather
+// All of above simply to get objects: location, today and forecast
 // Programming of App Functionality Begins Below
+        // Get Weather Data
+            //Build arrays with temperatures
+              var tempKLow =[];
+                tempKLow.push(today.main.temp);
+                forecast.list.map(function(fc){
+                  tempKLow.push(fc.temp.min)
+                });
 
-            //today's weather
-                var tempC = Math.round(today.main.temp - 273.15);
-                var tempF = Math.round(tempC*9/5 + 32);
-                var sky = today.weather[0].description.toUpperCase();
-                var temp = tempF;
+                var tempKHigh =[];
+                  tempKHigh.push(today.main.temp);
+                  forecast.list.map(function(fc){
+                    tempKHigh.push(fc.temp.max)
+                  });
+
+                var sky = toTitleCase(today.weather[0].description);
+                var temp = toFarh(tempKLow[0]);
                 var units = '°F';
-                document.querySelector('#city').textContent = "Todays weather for "+location.city;
-                document.querySelector('#wx').textContent = sky + ".  Current Temperature is " + temp + units;
+                document.querySelector('#city').textContent = location.city;
+                document.querySelector('#wx').textContent = sky + ". Currently " + temp + units;
 
                 //Convert Deg C <-> Deg F
                 document.querySelector('#switchUnits').addEventListener('click',function(){
@@ -62,7 +72,7 @@ $.ajax(
                     temp = tempC;
                     units = '°C'
                   }
-                  document.querySelector('#wx').textContent = sky + ".  Current Temperature is " + temp + units;
+                  document.querySelector('#wx').textContent = sky + ".  Currently " + temp + units;
                 });
 
             // Forecast Weather
@@ -73,6 +83,26 @@ $.ajax(
                 console.dir(forecast);
                 console.dir(today);
                 console.dir(location);
+
+          // Functions used in the program
+
+                function toTitleCase(str){
+                  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+                }
+
+                function toCelsius(arr){
+                  arr.map(function(temp){
+                    Math.round(temp-273.15);
+                  });
+                }
+
+                function toFarh(arr){
+                  arr.map(function(temp){
+                    Math.round((temp-273.15)*9/5);
+                  });
+                }
+
+// ERROR Notices if API calls did not work
 
               },  //End of "success" for Forecast Weather
               error: function(xhr, status, errorThrown) {
@@ -89,4 +119,6 @@ $.ajax(
     console.log("There has been an error getting the users location from the IP-API");
   }
 });
+
+
 });

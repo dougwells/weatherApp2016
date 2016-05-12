@@ -1,3 +1,11 @@
+// Flow:
+//
+//   1) Get Location (in object "location")
+//   2) Get Today's weather (in object "today")
+//   3) Get Forecasted weather (in object "forecast")
+//
+//   Nest all of the above so all three objects are available simultaneously
+
 $(document).ready(function() {
   console.log ("All Systems go!");
   var wxAPI = "APPID=094c7cfda5c9b5993192ea76c73f8d41";
@@ -25,60 +33,74 @@ $.ajax(
         type: "GET",
 
         success: function(today) {
-            var tempC = Math.round(today.main.temp - 273.15);
-            var tempF = Math.round(tempC*9/5 + 32);
-            var sky = today.weather[0].description.toUpperCase();
-            var temp = tempF;
-            var units = '°F';
-            document.querySelector('#city').textContent = "Todays weather for "+location.city;
-            document.querySelector('#wx').textContent = sky + ".  Current Temperature is " + temp + units;
-            console.dir(today);
-
-            //Convert Deg C <-> Deg F
-            document.querySelector('#switchUnits').addEventListener('click',function(){
-              if(temp === tempC){
-                temp = tempF;
-                units = '°F'
-              }else{
-                temp = tempC;
-                units = '°C'
-              }
-              document.querySelector('#wx').textContent = sky + ".  Current Temperature is " + temp + units;
-            });
-
-            //Forecast Weather
-
+      //Get forecast Weather
             $.ajax(
               {
               url: wxForecastLatLonUrl,
               dataType : "json",
               type: "GET",
+              success: function(forecast) {
 
-              success: function(fc) {
+// All of above simply to get objects: location, today and forecast
+// Programming of App Functionality Begins Below
+        // Get Weather Data
+            //today's weather
+                var tempC = Math.round(today.main.temp - 273.15);
+                var tempF = Math.round(tempC*9/5 + 32);
+                var sky = toTitleCase(today.weather[0].description);
+                var temp = tempF;
+                var units = '°F';
+                document.querySelector('#city').textContent = location.city;
+                document.querySelector('#wx').textContent = sky + ". Currently " + temp + units;
+
+                //Convert Deg C <-> Deg F
+                document.querySelector('#switchUnits').addEventListener('click',function(){
+                  if(temp === tempC){
+                    temp = tempF;
+                    units = '°F'
+                  }else{
+                    temp = tempC;
+                    units = '°C'
+                  }
+                  document.querySelector('#wx').textContent = sky + ".  Currently " + temp + units;
+                });
+
+            // Forecast Weather
                  for(var i=0; i<=4; i++){
                   var day = "#fc"+(i+1);
-                  document.querySelector(day).textContent = fc.list[i].weather[0].description;
+                  document.querySelector(day).textContent = forecast.list[i].weather[0].description;
                 };
-                console.dir(fc);
+                console.dir(forecast);
+                console.dir(today);
+                console.dir(location);
 
-              },
+          // Functions used in the program
+
+                function toTitleCase(str){
+                  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+                }
+
+                function todayWX(){
+
+                }
+
+// ERROR Notices if API calls did not work
+
+              },  //End of "success" for Forecast Weather
               error: function(xhr, status, errorThrown) {
-                console.log("There has been an error connecting to OpenWeather API");
+                console.log("There has been an error getting Forecast weather from OpenWeather API");
               }
             });
-
-        },
+        },  //end of "success" for Today's Weather
         error: function(xhr, status, errorThrown) {
-          console.log("There has been an error connecting to OpenWeather API");
+          console.log("There has been an error getting Today's weather from OpenWeather API");
         }
       });
-
-
-
-  },
+  },  //End of "success" for location API
   error: function(xhr, status, errorThrown) {
-    console.log("There has been an error getting the users location");
+    console.log("There has been an error getting the users location from the IP-API");
   }
 });
+
 
 });
