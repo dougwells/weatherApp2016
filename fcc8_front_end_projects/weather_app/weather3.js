@@ -1,4 +1,4 @@
-// Flow:
+// Flow of Program:
 //
 //   1) Get Location (in object "location")
 //   2) Get Today's weather (in object "today")
@@ -18,6 +18,8 @@ $.ajax(
   type: "GET",
 
   success: function(location) {
+    //Grab name of city from user's IP location
+    //Set location variables needed to make API call to OpenWeather
     var city = location.city.toLowerCase().replace(/\s+/g, '')+","+location.countryCode;
     var wxTodayLatLonUrl = "http://api.openweathermap.org/data/2.5/weather?lat="+location.lat+"&lon="+location.lon+"&"+wxAPI;
     var wxTodayCityUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&"+wxAPI;
@@ -44,35 +46,44 @@ $.ajax(
 // All of above simply to get objects: location, today and forecast
 // Programming of App Functionality Begins Below
         // Get Weather Data
+
+            //Build Array with Sky conditions
+              
+
             //Build arrays with temperatures
-              var tempKLow =[];
-                tempKLow.push(today.main.temp);
+              var tempKMin =[];
+                tempKMin.push(today.main.temp);
                 forecast.list.map(function(fc){
-                  tempKLow.push(fc.temp.min)
+                  tempKMin.push(fc.temp.min);
                 });
 
-                var tempKHigh =[];
-                  tempKHigh.push(today.main.temp);
+                var tempKMax =[];
+                  tempKMax.push(today.main.temp);
                   forecast.list.map(function(fc){
-                    tempKHigh.push(fc.temp.max)
+                    tempKMax.push(fc.temp.max);
                   });
 
+                var tempCMin = tempKMin.map(kToC);
+                var tempCMax = tempKMax.map(kToC);
+                var tempFMin = tempKMin.map(kToF);
+                var tempFMax = tempKMax.map(kToF);
+            //End Temperature Arrays
+
+
                 var sky = toTitleCase(today.weather[0].description);
-                var temp = toFarh(tempKLow[0]);
+                var celsius = false;
                 var units = '°F';
                 document.querySelector('#city').textContent = location.city;
-                document.querySelector('#wx').textContent = sky + ". Currently " + temp + units;
+                document.querySelector('#wx').textContent = sky + ". Currently " + tempFMin[0] + units;
 
                 //Convert Deg C <-> Deg F
                 document.querySelector('#switchUnits').addEventListener('click',function(){
-                  if(temp === tempC){
-                    temp = tempF;
-                    units = '°F'
+                  if(celsius){
+                    switchToFahrenheit();
                   }else{
-                    temp = tempC;
-                    units = '°C'
+                    switchtoCelsius();
                   }
-                  document.querySelector('#wx').textContent = sky + ".  Currently " + temp + units;
+                  document.querySelector('#wx').textContent = sky + ".  Currently " + tempMin[0] + units;
                 });
 
             // Forecast Weather
@@ -86,21 +97,32 @@ $.ajax(
 
           // Functions used in the program
 
+                function switchToFahrenheit(){
+                  tempMin = tempFMin;
+                  tempMax = tempFMax;
+                  units = '°F'
+                  celsius = false;
+                }
+
+                function switchtoCelsius(){
+                  tempMin = tempCMin;
+                  tempMax = tempCMax;
+                  units = '°C'
+                  celsius = true;
+                }
+
+                function kToC(temp){
+                  return Math.round(Math.round(temp-273.15));
+                }
+
+                function kToF(temp){
+                    return Math.round(32+(temp-273.15)*9/5);
+                  }
+
                 function toTitleCase(str){
                   return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
                 }
 
-                function toCelsius(arr){
-                  arr.map(function(temp){
-                    Math.round(temp-273.15);
-                  });
-                }
-
-                function toFarh(arr){
-                  arr.map(function(temp){
-                    Math.round((temp-273.15)*9/5);
-                  });
-                }
 
 // ERROR Notices if API calls did not work
 
