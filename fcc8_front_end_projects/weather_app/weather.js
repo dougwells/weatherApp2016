@@ -1,4 +1,4 @@
-// Flow:
+// Flow of Program:
 //
 //   1) Get Location (in object "location")
 //   2) Get Today's weather (in object "today")
@@ -18,6 +18,8 @@ $.ajax(
   type: "GET",
 
   success: function(location) {
+    //Grab name of city from user's IP location
+    //Set location variables needed to make API call to OpenWeather
     var city = location.city.toLowerCase().replace(/\s+/g, '')+","+location.countryCode;
     var wxTodayLatLonUrl = "http://api.openweathermap.org/data/2.5/weather?lat="+location.lat+"&lon="+location.lon+"&"+wxAPI;
     var wxTodayCityUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&"+wxAPI;
@@ -44,45 +46,93 @@ $.ajax(
 // All of above simply to get objects: location, today and forecast
 // Programming of App Functionality Begins Below
         // Get Weather Data
-            //today's weather
-                var tempC = Math.round(today.main.temp - 273.15);
-                var tempF = Math.round(tempC*9/5 + 32);
-                var sky = toTitleCase(today.weather[0].description);
-                var temp = tempF;
-                var units = '°F';
-                document.querySelector('#city').textContent = location.city;
-                document.querySelector('#wx').textContent = sky + ". Currently " + temp + units;
 
-                //Convert Deg C <-> Deg F
-                document.querySelector('#switchUnits').addEventListener('click',function(){
-                  if(temp === tempC){
-                    temp = tempF;
-                    units = '°F'
-                  }else{
-                    temp = tempC;
-                    units = '°C'
-                  }
-                  document.querySelector('#wx').textContent = sky + ".  Currently " + temp + units;
+            //Build arrays with temperatures
+              var tempKMin =[];
+                tempKMin.push(today.main.temp);
+                forecast.list.map(function(fc){
+                  tempKMin.push(fc.temp.min);
                 });
 
-            // Forecast Weather
-                 for(var i=0; i<=4; i++){
-                  var day = "#fc"+(i+1);
-                  document.querySelector(day).textContent = forecast.list[i].weather[0].description;
-                };
+                var tempKMax =[];
+                  tempKMax.push(today.main.temp);
+                  forecast.list.map(function(fc){
+                    tempKMax.push(fc.temp.max);
+                  });
+
+                var tempCMin = tempKMin.map(kToC);
+                var tempCMax = tempKMax.map(kToC);
+                var tempFMin = tempKMin.map(kToF);
+                var tempFMax = tempKMax.map(kToF);
+            //End Temperature Arrays
+
+            //Show Today's Weather
+                var sky = toTitleCase(today.weather[0].description);
+                var celsius = false;
+                var units = '°F';
+                document.querySelector('#city').textContent = location.city;
+                document.querySelector('#wx').textContent = sky + ". Currently " + tempFMin[0] + units;
+
+            //Show Forecast
+                showForecast(tempFMin, tempFMax);
+
+            //Convert Deg C <-> Deg F
+              document.querySelector('#switchUnits').addEventListener('click',function(){
+                if(celsius){
+                  switchToFahrenheit();
+                }else{
+                  switchtoCelsius();
+                }
+              });
                 console.dir(forecast);
                 console.dir(today);
                 console.dir(location);
 
           // Functions used in the program
 
+                function switchToFahrenheit(){
+                  tempMin = tempFMin;
+                  tempMax = tempFMax;
+                  units = '°F'
+                  celsius = false;
+                  showForecast(tempMin, tempMax);
+                  document.querySelector('#wx').textContent = sky + ".  Currently " + tempMin[0] + units;
+
+                }
+
+                function switchtoCelsius(){
+                  tempMin = tempCMin;
+                  tempMax = tempCMax;
+                  units = '°C'
+                  celsius = true;
+                  showForecast(tempMin, tempMax);
+                  document.querySelector('#wx').textContent = sky + ".  Currently " + tempMin[0] + units;
+
+                }
+
+                function showForecast(tempMin, tempMax){
+                   for(var i=0; i<=4; i++){
+                    var day = "#fc"+(i+1);
+                    var lowTemp = "#lt"+(i+1);
+                    var highTemp = "#ht"+(i+1);
+                    document.querySelector(day).textContent = forecast.list[i].weather[0].description;
+                    document.querySelector(lowTemp).textContent = tempMin[i+1] + units;
+                    document.querySelector(highTemp).textContent = tempMax[i+1] + units;
+                  };
+                }
+
+                function kToC(temp){
+                  return Math.round(Math.round(temp-273.15));
+                }
+
+                function kToF(temp){
+                    return Math.round(32+(temp-273.15)*9/5);
+                  }
+
                 function toTitleCase(str){
                   return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
                 }
 
-                function todayWX(){
-
-                }
 
 // ERROR Notices if API calls did not work
 
