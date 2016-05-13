@@ -48,7 +48,7 @@ $.ajax(
         // Get Weather Data
 
             //Build Array with Sky conditions
-              
+
 
             //Build arrays with temperatures
               var tempKMin =[];
