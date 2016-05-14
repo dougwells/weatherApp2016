@@ -27,7 +27,7 @@ $.ajax(
     var wxForecastCityUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+"&"+wxAPI;
 
 
-    // Get Todays Weather
+    // Get Todays Weather from OpenWeather API
       $.ajax(
         {
         url: wxTodayLatLonUrl,
@@ -35,7 +35,7 @@ $.ajax(
         type: "GET",
 
         success: function(today) {
-      //Get forecast Weather
+      //Get forecast Weather from OpenWeather API
             $.ajax(
               {
               url: wxForecastLatLonUrl,
@@ -46,6 +46,10 @@ $.ajax(
 // All of above simply to get objects: location, today and forecast
 // Programming of App Functionality Begins Below
         // Get Weather Data
+        var sky = toTitleCase(today.weather[0].description);
+        var units = '°F';
+        var celsius = false;
+        // var wx = getWeather();
 
             //Build arrays with temperatures
               var tempKMin =[];
@@ -64,24 +68,24 @@ $.ajax(
                 var tempCMax = tempKMax.map(kToC);
                 var tempFMin = tempKMin.map(kToF);
                 var tempFMax = tempKMax.map(kToF);
+
             //End Temperature Arrays
 
             //Show Today's Weather
-                var sky = toTitleCase(today.weather[0].description);
-                var celsius = false;
-                var units = '°F';
-                document.querySelector('#city').textContent = location.city;
-                document.querySelector('#wx').textContent = sky + ". Currently " + tempFMin[0] + units;
+              showToday(tempFMin);
+
 
             //Show Forecast
-                showForecast(tempFMin, tempFMax);
+              showForecast(tempFMin, tempFMax);
 
-            //Convert Deg C <-> Deg F
+            //On-Click:  Convert Deg C <-> Deg F
               document.querySelector('#switchUnits').addEventListener('click',function(){
                 if(celsius){
                   switchToFahrenheit();
+                  celsius = false;
                 }else{
                   switchtoCelsius();
+                  celsius = true;
                 }
               });
                 console.dir(forecast);
@@ -90,25 +94,28 @@ $.ajax(
 
           // Functions used in the program
 
-                function switchToFahrenheit(){
-                  tempMin = tempFMin;
-                  tempMax = tempFMax;
-                  units = '°F'
-                  celsius = false;
+                function switchToFahrenheit(sky){
+                  var tempMin = tempFMin;
+                  var tempMax = tempFMax;
+                  var units = '°F'
+                  showToday(tempMin);
                   showForecast(tempMin, tempMax);
-                  document.querySelector('#wx').textContent = sky + ".  Currently " + tempMin[0] + units;
 
                 }
 
                 function switchtoCelsius(){
-                  tempMin = tempCMin;
-                  tempMax = tempCMax;
-                  units = '°C'
-                  celsius = true;
+                  var tempMin = tempCMin;
+                  var tempMax = tempCMax;
+                  var units = '°C'
+                  showToday(tempMin);
                   showForecast(tempMin, tempMax);
-                  document.querySelector('#wx').textContent = sky + ".  Currently " + tempMin[0] + units;
 
                 }
+
+                  function showToday(tempMin){
+                    document.querySelector('#city').textContent = location.city;
+                    document.querySelector('#wx').textContent = sky + ". Currently " + tempMin[0] + units;
+                  }
 
                 function showForecast(tempMin, tempMax){
                    for(var i=0; i<=4; i++){
