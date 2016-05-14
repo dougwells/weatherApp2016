@@ -43,102 +43,104 @@ $.ajax(
               type: "GET",
               success: function(forecast) {
 
-// All of above simply to get objects: location, today and forecast
+// All of above simply to get the objects: location, today and forecast
 // Programming of App Functionality Begins Below
-        // Get Weather Data
-        var sky = toTitleCase(today.weather[0].description);
-        var units = '°F';
-        var celsius = false;
-        // var wx = getWeather();
 
-            //Build arrays with temperatures
-              var tempKMin =[];
-                tempKMin.push(today.main.temp);
-                forecast.list.map(function(fc){
-                  tempKMin.push(fc.temp.min);
-                });
+      // Get Weather Data
+        var wx = getWeather();
 
-                var tempKMax =[];
-                  tempKMax.push(today.main.temp);
-                  forecast.list.map(function(fc){
-                    tempKMax.push(fc.temp.max);
-                  });
+      //Show Today's Weather & Set Units
+            showToday(wx.tempFMin);
+            var units = '°F';
+            var celsius = false;
 
-                var tempCMin = tempKMin.map(kToC);
-                var tempCMax = tempKMax.map(kToC);
-                var tempFMin = tempKMin.map(kToF);
-                var tempFMax = tempKMax.map(kToF);
+      //Show Forecast
+        showForecast(wx.tempFMin, wx.tempFMax);
 
-            //End Temperature Arrays
+      //On-Click:  Convert Deg C <-> Deg F
+        document.querySelector('#switchUnits').addEventListener('click',function(){
+          if(celsius){
+            switchToFahrenheit();
+            celsius = false;
+          }else{
+            switchtoCelsius();
+            celsius = true;
+          }
+        });
 
-            //Show Today's Weather
-              showToday(tempFMin);
+      // Functions used in the program
 
+        function getWeather(){
+          var wx ={}
+          //Today's sky conditions
+            wx.sky = toTitleCase(today.weather[0].description);
 
-            //Show Forecast
-              showForecast(tempFMin, tempFMax);
-
-            //On-Click:  Convert Deg C <-> Deg F
-              document.querySelector('#switchUnits').addEventListener('click',function(){
-                if(celsius){
-                  switchToFahrenheit();
-                  celsius = false;
-                }else{
-                  switchtoCelsius();
-                  celsius = true;
-                }
+          //Build arrays with temperatures
+              wx.tempKMin =[];
+              wx.tempKMin.push(today.main.temp);
+              forecast.list.map(function(fc){
+                wx.tempKMin.push(fc.temp.min);
               });
-                console.dir(forecast);
-                console.dir(today);
-                console.dir(location);
 
-          // Functions used in the program
+              wx.tempKMax =[];
+              wx.tempKMax.push(today.main.temp);
+              forecast.list.map(function(fc){
+                wx.tempKMax.push(fc.temp.max);
+              });
 
-                function switchToFahrenheit(sky){
-                  var tempMin = tempFMin;
-                  var tempMax = tempFMax;
-                  var units = '°F'
-                  showToday(tempMin);
-                  showForecast(tempMin, tempMax);
-
+              wx.tempCMin = wx.tempKMin.map(kToC);
+              wx.tempCMax = wx.tempKMax.map(kToC);
+              wx.tempFMin = wx.tempKMin.map(kToF);
+              wx.tempFMax = wx.tempKMax.map(kToF);
+          //End Temperature Arrays
+          return wx;
                 }
 
-                function switchtoCelsius(){
-                  var tempMin = tempCMin;
-                  var tempMax = tempCMax;
-                  var units = '°C'
-                  showToday(tempMin);
-                  showForecast(tempMin, tempMax);
+          function switchToFahrenheit(sky){
+            var tempMin = wx.tempFMin;
+            var tempMax = wx.tempFMax;
+            var units = '°F'
+            showToday(tempMin);
+            showForecast(tempMin, tempMax);
 
-                }
+          }
 
-                  function showToday(tempMin){
-                    document.querySelector('#city').textContent = location.city;
-                    document.querySelector('#wx').textContent = sky + ". Currently " + tempMin[0] + units;
-                  }
+          function switchtoCelsius(){
+            var tempMin = wx.tempCMin;
+            var tempMax = wx.tempCMax;
+            var units = '°C'
+            showToday(tempMin);
+            showForecast(tempMin, tempMax);
 
-                function showForecast(tempMin, tempMax){
-                   for(var i=0; i<=4; i++){
-                    var day = "#fc"+(i+1);
-                    var lowTemp = "#lt"+(i+1);
-                    var highTemp = "#ht"+(i+1);
-                    document.querySelector(day).textContent = forecast.list[i].weather[0].description;
-                    document.querySelector(lowTemp).textContent = tempMin[i+1] + units;
-                    document.querySelector(highTemp).textContent = tempMax[i+1] + units;
-                  };
-                }
+          }
 
-                function kToC(temp){
-                  return Math.round(Math.round(temp-273.15));
-                }
+            function showToday(tempMin){
+              document.querySelector('#city').textContent = location.city;
+              document.querySelector('#wx').textContent = wx.sky + ". Currently " + tempMin[0] + units;
+            }
 
-                function kToF(temp){
-                    return Math.round(32+(temp-273.15)*9/5);
-                  }
+          function showForecast(tempMin, tempMax){
+             for(var i=0; i<=4; i++){
+              var day = "#fc"+(i+1);
+              var lowTemp = "#lt"+(i+1);
+              var highTemp = "#ht"+(i+1);
+              document.querySelector(day).textContent = forecast.list[i].weather[0].description;
+              document.querySelector(lowTemp).textContent = tempMin[i+1] + units;
+              document.querySelector(highTemp).textContent = tempMax[i+1] + units;
+            };
+          }
 
-                function toTitleCase(str){
-                  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-                }
+          function kToC(temp){
+            return Math.round(Math.round(temp-273.15));
+          }
+
+          function kToF(temp){
+              return Math.round(32+(temp-273.15)*9/5);
+            }
+
+          function toTitleCase(str){
+            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+          }
 
 
 // ERROR Notices if API calls did not work
