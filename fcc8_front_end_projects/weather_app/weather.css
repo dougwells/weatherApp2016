@@ -1,8 +1,20 @@
+
 body{
-  background-color: #3F51B5;
+  background-color: #556270;
   color: white;
+  font-family: 'Roboto';
+  font-weight: 100;
+}
+
+h1,h2,h3, h4{
+  font-family: 'Roboto';
+  font-weight: 300;
 }
 
 hr {
-  background: white;
+  border-color: white;
+}
+
+.day {
+  font-size: 16px;
 }

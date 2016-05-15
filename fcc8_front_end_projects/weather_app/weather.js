@@ -46,20 +46,18 @@ $.ajax(
 // All of above simply to get the objects: location, today and forecast
 // Programming of App Functionality Begins Below
 
-    // console.dir(location);
-    // console.dir(today);
-    console.dir(forecast);
 
       // Get Weather Data & Name of Days of Week from Today
         var wx = getWeather();
-        console.dir(wx);
-
 
       //Show Today's Weather & Set Units
             var units = '°F';
             var celsius = false;
             showToday(wx.tempFMin);
 
+
+      //Set app's background color
+        setBackgroundColor();
 
       //Show Forecast
         showForecast(wx.tempFMin, wx.tempFMax);
@@ -116,8 +114,15 @@ $.ajax(
             var date = new Date();
             var day = date.getDay();
             var week = standardWeek.slice(day, day+7);
-            return week
-;          }
+            return week;
+          }
+
+          function setBackgroundColor(){
+            sunny = today.weather[0].icon.includes("01") || today.weather[0].icon.includes("02")
+            if(sunny){
+              document.querySelector('body').style["background-color"] = "#3F51B5";
+            }
+          }
 
 
           function switchToFahrenheit(sky){
@@ -139,8 +144,9 @@ $.ajax(
           }
 
             function showToday(tempMin){
-              document.querySelector('#city').textContent = location.city;
-              document.querySelector('#wx').textContent = wx.sky[0] + ". Currently " + tempMin[0] + units;
+              document.querySelector('#city').textContent = "Current weather for "+location.city +":";
+              document.querySelector("#currentIcon").setAttribute("src",wx.icon[0]);
+              document.querySelector('#currentWx').textContent = wx.sky[0]+".  Currently " + tempMin[0] +" "+ units;
             }
 
           function showForecast(tempMin, tempMax){
@@ -153,8 +159,8 @@ $.ajax(
               document.querySelector(icon).setAttribute("src",wx.icon[i]);
               document.querySelector(day).textContent = wx.week[i];
               document.querySelector(fcDay).textContent = wx.sky[i];
-              document.querySelector(lowTemp).textContent = tempMin[i] + units;
-              document.querySelector(highTemp).textContent = tempMax[i] + units;
+              document.querySelector(lowTemp).textContent = tempMin[i] +" " + units;
+              document.querySelector(highTemp).textContent = tempMax[i] +" " + units;
             };
           }
 
