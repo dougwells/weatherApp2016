@@ -46,13 +46,20 @@ $.ajax(
 // All of above simply to get the objects: location, today and forecast
 // Programming of App Functionality Begins Below
 
-      // Get Weather Data
+    // console.dir(location);
+    // console.dir(today);
+    console.dir(forecast);
+
+      // Get Weather Data & Name of Days of Week from Today
         var wx = getWeather();
+        console.dir(wx);
+
 
       //Show Today's Weather & Set Units
-            showToday(wx.tempFMin);
             var units = '°F';
             var celsius = false;
+            showToday(wx.tempFMin);
+
 
       //Show Forecast
         showForecast(wx.tempFMin, wx.tempFMax);
@@ -73,33 +80,50 @@ $.ajax(
         function getWeather(){
           var wx ={}
           //Today's sky conditions
-            wx.sky = toTitleCase(today.weather[0].description);
 
-          //Build arrays with temperatures
+          //Build temperatures & wx icon arrays
+            //today
               wx.tempKMin =[];
+              wx.tempKMax =[];
+              wx.icon = [];
+              wx.sky = [];
+
               wx.tempKMin.push(today.main.temp);
+              wx.tempKMax.push(today.main.temp);
+              wx.icon.push("http://openweathermap.org/img/w/"+today.weather[0].icon+".png");
+              wx.sky.push(toTitleCase(today.weather[0].description));
+
+
+              //forecast
               forecast.list.map(function(fc){
                 wx.tempKMin.push(fc.temp.min);
-              });
-
-              wx.tempKMax =[];
-              wx.tempKMax.push(today.main.temp);
-              forecast.list.map(function(fc){
                 wx.tempKMax.push(fc.temp.max);
+                wx.icon.push("http://openweathermap.org/img/w/" +fc.weather[0].icon +".png");
+                wx.sky.push(toTitleCase(fc.weather[0].description));
               });
 
               wx.tempCMin = wx.tempKMin.map(kToC);
               wx.tempCMax = wx.tempKMax.map(kToC);
               wx.tempFMin = wx.tempKMin.map(kToF);
               wx.tempFMax = wx.tempKMax.map(kToF);
+              wx.week = getWeek();
           //End Temperature Arrays
           return wx;
                 }
 
+          function getWeek (){
+            var standardWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+            var date = new Date();
+            var day = date.getDay();
+            var week = standardWeek.slice(day, day+7);
+            return week
+;          }
+
+
           function switchToFahrenheit(sky){
             var tempMin = wx.tempFMin;
             var tempMax = wx.tempFMax;
-            var units = '°F'
+            units = '°F'
             showToday(tempMin);
             showForecast(tempMin, tempMax);
 
@@ -108,7 +132,7 @@ $.ajax(
           function switchtoCelsius(){
             var tempMin = wx.tempCMin;
             var tempMax = wx.tempCMax;
-            var units = '°C'
+            units = '°C'
             showToday(tempMin);
             showForecast(tempMin, tempMax);
 
@@ -116,17 +140,21 @@ $.ajax(
 
             function showToday(tempMin){
               document.querySelector('#city').textContent = location.city;
-              document.querySelector('#wx').textContent = wx.sky + ". Currently " + tempMin[0] + units;
+              document.querySelector('#wx').textContent = wx.sky[0] + ". Currently " + tempMin[0] + units;
             }
 
           function showForecast(tempMin, tempMax){
-             for(var i=0; i<=4; i++){
-              var day = "#fc"+(i+1);
-              var lowTemp = "#lt"+(i+1);
-              var highTemp = "#ht"+(i+1);
-              document.querySelector(day).textContent = forecast.list[i].weather[0].description;
-              document.querySelector(lowTemp).textContent = tempMin[i+1] + units;
-              document.querySelector(highTemp).textContent = tempMax[i+1] + units;
+             for(var i=1; i<=5; i++){
+              var icon = "#wx"+(i);
+              var day = "#day"+(i);
+              var fcDay = "#fc"+(i);
+              var lowTemp = "#lt"+(i);
+              var highTemp = "#ht"+(i);
+              document.querySelector(icon).setAttribute("src",wx.icon[i]);
+              document.querySelector(day).textContent = wx.week[i];
+              document.querySelector(fcDay).textContent = wx.sky[i];
+              document.querySelector(lowTemp).textContent = tempMin[i] + units;
+              document.querySelector(highTemp).textContent = tempMax[i] + units;
             };
           }
 
@@ -137,6 +165,9 @@ $.ajax(
           function kToF(temp){
               return Math.round(32+(temp-273.15)*9/5);
             }
+
+          // function iconToUrl (iconId)
+          //     return "http://openweathermap.org/img/w/" + iconId + ".png";
 
           function toTitleCase(str){
             return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
