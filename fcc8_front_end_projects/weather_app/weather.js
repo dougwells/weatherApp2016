@@ -7,10 +7,10 @@
 //   Nest all of the above so all three objects are available simultaneously
 
 $(document).ready(function() {
-  console.log ("All Systems go!");
   var wxAPI = "APPID=094c7cfda5c9b5993192ea76c73f8d41";
 
-//Get user's location
+
+//Get user's location (latitude & longitude)
 $.ajax(
   {
   url: "http://ip-api.com/json",
@@ -18,19 +18,29 @@ $.ajax(
   type: "GET",
 
   success: function(location) {
+    $.ajax({ url:'http://maps.googleapis.com/maps/api/geocode/json?latlng='+location.lat+','+location.lon+'&sensor=true',
+         success: function(data){
+             var city = data.results[4].address_components[0].long_name;
+             var state = data.results[4].address_components[1].short_name;
+             var country = data.results[4].address_components[2].short_name;
+             console.log(city, state, country);
+
     //Grab name of city from user's IP location
     //Set location variables needed to make API call to OpenWeather
-    var city = location.city.toLowerCase().replace(/\s+/g, '')+","+location.countryCode;
+    var cityUrl = city.toLowerCase().replace(/\s+/g, '')+","+country;
     var wxTodayLatLonUrl = "http://api.openweathermap.org/data/2.5/weather?lat="+location.lat+"&lon="+location.lon+"&"+wxAPI;
-    var wxTodayCityUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&"+wxAPI;
+    var wxTodayCityUrl = "http://api.openweathermap.org/data/2.5/weather?q="+cityUrl+"&"+wxAPI;
     var wxForecastLatLonUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+location.lat+"&lon="+location.lon+"&"+wxAPI;
     var wxForecastCityUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+"&"+wxAPI;
+    console.log(cityUrl);
+
+
 
 
     // Get Todays Weather from OpenWeather API
       $.ajax(
         {
-        url: wxTodayLatLonUrl,
+        url: wxTodayCityUrl,
         dataType : "json",
         type: "GET",
 
@@ -54,7 +64,6 @@ $.ajax(
             var units = '°F';
             var celsius = false;
             showToday(wx.tempFMin);
-
 
       //Set app's background color
         setBackgroundColor();
@@ -144,7 +153,7 @@ $.ajax(
           }
 
             function showToday(tempMin){
-              document.querySelector('#city').textContent = "Current weather for "+location.city +":";
+              document.querySelector('#city').textContent = city +", "+state;
               document.querySelector("#currentIcon").setAttribute("src",wx.icon[0]);
               document.querySelector('#currentWx').textContent = wx.sky[0]+".  Currently " + tempMin[0] +" "+ units;
             }
@@ -157,7 +166,7 @@ $.ajax(
               var lowTemp = "#lt"+(i);
               var highTemp = "#ht"+(i);
               document.querySelector(icon).setAttribute("src",wx.icon[i]);
-              document.querySelector(day).textContent = wx.week[i];
+              document.querySelector(day).textContent = wx.week[i].substring(0, 3);
               document.querySelector(fcDay).textContent = wx.sky[i];
               document.querySelector(lowTemp).textContent = tempMin[i] +" " + units;
               document.querySelector(highTemp).textContent = tempMax[i] +" " + units;
@@ -192,6 +201,10 @@ $.ajax(
           console.log("There has been an error getting Today's weather from OpenWeather API");
         }
       });
+
+    } //End of success for Google Maps API
+  });
+
   },  //End of "success" for location API
   error: function(xhr, status, errorThrown) {
     console.log("There has been an error getting the users location from the IP-API");
