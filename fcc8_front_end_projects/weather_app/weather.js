@@ -33,7 +33,8 @@ $.ajax(
     var wxTodayCityUrl = "http://api.openweathermap.org/data/2.5/weather?q="+cityUrl+"&"+wxAPI;
     var wxForecastLatLonUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+location.lat+"&lon="+location.lon+"&"+wxAPI;
     var wxForecastCityUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+"&"+wxAPI;
-    console.log(cityUrl);
+    console.log(wxTodayCityUrl);
+    console.log(wxForecastLatLonUrl);
 
 
 
@@ -49,7 +50,7 @@ $.ajax(
       //Get forecast Weather from OpenWeather API
             $.ajax(
               {
-              url: wxForecastLatLonUrl,
+              url: wxForecastCityUrl,
               dataType : "json",
               type: "GET",
               success: function(forecast) {
