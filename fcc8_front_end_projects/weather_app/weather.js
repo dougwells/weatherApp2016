@@ -20,9 +20,10 @@ $.ajax(
   success: function(location) {
     $.ajax({ url:'http://maps.googleapis.com/maps/api/geocode/json?latlng='+location.lat+','+location.lon+'&sensor=true',
          success: function(data){
-             var city = data.results[4].address_components[0].long_name;
-             var state = data.results[4].address_components[1].short_name;
-             var country = data.results[4].address_components[2].short_name;
+            console.dir(data);
+             var city = data.results[0].address_components[2].long_name;
+             var state = data.results[4].address_components[0].short_name;
+             var country = data.results[4].address_components[1].short_name;
              console.log(city, state, country);
 
     //Grab name of city from user's IP location
