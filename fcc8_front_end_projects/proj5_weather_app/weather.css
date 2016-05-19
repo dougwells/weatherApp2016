@@ -1,0 +1,28 @@
+
+body{
+  background-color: #556270;
+  color: white;
+  font-family: 'Roboto';
+  font-weight: 100;
+}
+
+h1,h2,h3, h4{
+  font-family: 'Roboto';
+  font-weight: 300;
+}
+
+hr {
+  border-color: white;
+}
+
+.day {
+  font-size: 24px;
+}
+
+.fc {
+  font-size: 18px;
+}
+
+.wxIcon {
+  line-height: 100px;
+}
